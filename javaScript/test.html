@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="en">
-<meta http-equiv="refresh" content="10" />
+<!-- <meta http-equiv="refresh" content="10" /> -->
 
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/css/ol.css"
-    type="text/css">
-  <link rel="stylesheet" href="css/map.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <!-- <script src="js/test.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/css/ol.css"
+    type="text/css"> -->
+  <link rel="stylesheet" href="css/ol.css" type="text/css">
+  <link rel="stylesheet" href="css/map.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
   <title>OpenLayers example</title>
 </head>
 
 <body>
   <h2>My Map</h2>
   <div id="map" class="map"></div>
-  <input type="button" name="click" id="click" value="clickon">
+  <input type="button" name="click" id="click" value="클릭">
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
     Launch demo modal
   </button>
@@ -43,9 +43,11 @@
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/build/ol.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.1.1/build/ol.js"></script> -->
+  <script src="js/ol.js"></script>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.js"></script>
+  <script src="js/layerConfig.js"></script>
   <script src='js/async.js'></script>
   <script src="js/test.js"></script>
 </body>

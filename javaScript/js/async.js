@@ -21,12 +21,12 @@ const popup = () => {
     let url = 'popup.html';
     let name = 'popup test';
     let option = 'width=500, height=500, top=100, left=200'
-    window.open({ url, name, option })
+    window.open( url, name, option )
 }
 
-$('#myModal').on('shown.bs.modal',()=> {
+$('#myModal').on('shown.bs.modal', () => {
     $('#myInput').trigger('focus')
-  })
+})
 
 $('#click').click(() => {
     // c().then(res=>{
@@ -35,7 +35,26 @@ $('#click').click(() => {
     popup();
 })
 
+// iconFeature.setStyle(iconStyle);
 
+// map.on('click', evt => {
+//     let feature = map.forEachFeatureAtPixel(evt.pixel,
+//         feature => {
+//             return feature;
+//         });
+
+//     if (feature) {
+//         alert(feature.get('name'));
+//     }
+// });
+
+// map.on('pointermove', e => {
+//     if (!e.dragging) {
+//         let pixel = map.getEventPixel(e.originalEvent);
+//         let hit = map.hasFeatureAtPixel(pixel);
+//         map.getTarget().style.cursor = hit ? 'pointer' : '';
+//     }
+// });
 
 // setTimeout(() => {
 //     window.location.reload(1)
