@@ -1,3 +1,7 @@
+$(function(){
+    c();
+});
+
 const test = result => {
     return new Promise((resolve, reject) => {
         resolve(result)
@@ -20,7 +24,7 @@ const c = async () => {
 const popup = () => {
     let url = 'popup.html';
     let name = 'popup test';
-    let option = 'width=500, height=500, top=100, left=200'
+    let option = 'width=500, height=500, top=500, left=500'
     window.open( url, name, option )
 }
 
@@ -56,6 +60,9 @@ $('#click').click(() => {
 //     }
 // });
 
-// setTimeout(() => {
-//     window.location.reload(1)
-// }, 10000);
+const time = time => {
+    setTimeout(() => {
+        window.location.reload(1)
+    }, time)
+}
+
