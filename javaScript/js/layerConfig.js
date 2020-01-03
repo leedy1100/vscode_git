@@ -58,7 +58,7 @@ const geoJson = {
 console.log('geojson type : '+typeof geoJson);
 
 const coord = [127.10159620100, 37.51118041410];
-const out = ol.coordinate.toStringXY(coord,8);
+const out = ol.coordinate.toStringXY(coord,8); // 소수점 8자리
 console.log('out : '+out);
 console.log('out type : ' + typeof out);
 
@@ -69,34 +69,57 @@ const layer = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
 
-const vectorSource = new ol.source.Vector({projection: 'EPSG:4326'});  //새로운 벡터 생성
-const circle = new ol.geom.Circle(changePoints, 2);  //좌표, 반경 넓이
-const CircleFeature = new ol.Feature(circle); //구조체로 형성
-vectorSource.addFeatures([CircleFeature]); // 벡터소스에 추가
+// const vectorSource = new ol.source.Vector({projection: 'EPSG:4326'});  //새로운 벡터 생성
+// const circle = new ol.geom.Circle(changePoints, 2);  //좌표, 반경 넓이
+// const CircleFeature = new ol.Feature(circle); //구조체로 형성
+// vectorSource.addFeatures([CircleFeature]); // 벡터소스에 추가
 
 
-const vectorLayer =new ol.layer.Vector({  //추가할 벡터레이어
-  source: vectorSource,
-  style: [
-  new ol.style.Style({
+// const vectorLayer =new ol.layer.Vector({  //추가할 벡터레이어
+//   source: vectorSource,
+//   style: [
+//   new ol.style.Style({
+//       stroke: new ol.style.Stroke({   //두께
+//           color: 'rgba(255, 000, 051, 0.7)',
+//           width: 0.1
+//       }),
+//       fill: new ol.style.Fill({  //채우기
+//           color: 'rgba(255, 000, 051, 0.7)'
+//       }),
+//       text : new ol.style.Text({  //텍스트
+//         text: 'circle!',
+//         textAlign: 'center',
+//         font: '15px roboto,sans-serif'            
+//       })
+//   })]
+// });
+/**
+ * 
+ * @param {layer list color} color 
+ */
+const circleStyle = color =>{
+  return new ol.style.Style({
+    image: new ol.style.Circle({
       stroke: new ol.style.Stroke({   //두께
-          color: 'rgba(255, 000, 051, 0.7)',
-          width: 0.1
+        color: color,
+        width: 0.1
       }),
       fill: new ol.style.Fill({  //채우기
-          color: 'rgba(255, 000, 051, 0.7)'
+        color: color
       }),
-      text : new ol.style.Text({  //텍스트
-        text: 'circle!',
-        textAlign: 'center',
-        font: '15px roboto,sans-serif'            
-      })
-  })]
-});
+      radius:5
+    }),
+    text: new ol.style.Text({  //텍스트
+      text: 'circle',
+      textAlign: 'center',
+      font: '15px roboto,sans-serif'
+    })
+  })
+}
 
 const map = new ol.Map({
   target: 'map',
-  layers: [layer,vectorLayer],
+  layers:[layer],
   view: new ol.View({
     center:changePoints,
     zoom: 18,
@@ -104,38 +127,59 @@ const map = new ol.Map({
   })
 });
 
-// map.addLayer(vector);
+// 필요x
+const formatCoordinate = coordinate => {
+  return ("\n    <table>\n      <tbody>\n        <tr><th>lon</th><td>" 
+  + (coordinate[0].toFixed(2)) + "</td></tr>\n        <tr><th>lat</th><td>" 
+  + (coordinate[1].toFixed(2)) + "</td></tr>\n      </tbody>\n    </table>");
+}
+/**
+ * 
+ * @param {geoJson api} url 
+ */
+const source = url => {
+  return new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    url: url
+  });
+}
+/**
+ * 
+ * @param {geoJson api} url 
+ * @param {layer list} color 
+ */
+const vector = (url,color) => {
+  return new ol.layer.Vector({
+    source: source(url),
+    style: [
+      circleStyle(color)
+    ]
+  });
+} 
+
+//  map.addLayer(vector());
 
 
+ /**
+  * popup layer
+  */
+const element = document.getElementById('popup');
 
-const source = new ol.source.Vector({
-  format: new ol.format.GeoJSON(),
-  url: 'json/geojson.json'
+const popup = new ol.Overlay({
+  element: element,
+  positioning: 'bottom-center',
+  stopEvent: false,
+  offset: [0, -10]
 });
-const vector = new ol.layer.Vector({
-  source: source,
-  style: [
-    new ol.style.Style({
-      image: new ol.style.Circle({
-        stroke: new ol.style.Stroke({   //두께
-          color: 'rgba(255, 000, 051, 0.7)',
-          width: 0.1
-        }),
-        fill: new ol.style.Fill({  //채우기
-          color: 'rgba(255, 000, 051, 0.7)'
-        }),
-        radius:5
-      }),
-      text: new ol.style.Text({  //텍스트
-        text: 'circle',
-        textAlign: 'center',
-        font: '15px roboto,sans-serif'
-      })
-    })
-  ]
-});
 
-map.addLayer(vector);
+
+
+// 좌표 대신 데이터값이 들어감
+const dataInsert = data => {
+  return "<div>"+(data)+"</div>";
+}
+
+const info = document.getElementById('info');
 
 // const tiledMap = new ol.layer.Tile({
 // 	//visible : false,
