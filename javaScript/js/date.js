@@ -1,5 +1,3 @@
-const dateType;
-const dateValue;
 
 const dayAdd = (today, type, value) =>{
     
@@ -47,7 +45,9 @@ const initSearchDates = (startDate, endDate, type, value) => {
 	$(startDate).datetimepicker(options);
 	$(endDate).datetimepicker(options);
 
-    
+    let dateType = 'date';
+    let dateValue = -3;
+
 	if(isNoValue(type)) {
 		dateType = 'date';
 		dateValue = -2;
